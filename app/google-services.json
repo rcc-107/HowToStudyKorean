@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "702776019108",
+    "firebase_url": "https://howtostudykorean-49f98.firebaseio.com",
+    "project_id": "howtostudykorean-49f98",
+    "storage_bucket": "howtostudykorean-49f98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702776019108:android:a63183c5553301bb",
+        "android_client_info": {
+          "package_name": "com.ridev.howtostudykorean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702776019108-8fojgdje0ri4kd2fv7o2hqk81fuv5mrl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ridev.howtostudykorean",
+            "certificate_hash": "c08a61c16f3b5305c1822f8d13df20c496a29e40"
+          }
+        },
+        {
+          "client_id": "702776019108-8csscb5cqv0mebhp4ap7e01i50h9kpat.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLaE80xWxjg-GXTBVTZIEjD-cDxu_QlKo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702776019108-8csscb5cqv0mebhp4ap7e01i50h9kpat.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
