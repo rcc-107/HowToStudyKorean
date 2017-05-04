@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setVisibility(View.GONE);
+
         ViewStub viewStub = (ViewStub) findViewById(R.id.viewStub);
         viewStub.setLayoutResource(R.layout.content_main);
         viewStub.inflate();
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         viewPager.setPageMargin(20);
 
         database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
         ref = database.getReference().child("units");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -196,7 +201,7 @@ public class MainActivity extends AppCompatActivity
                     String selectedUnit = (String) title.getText().toString().toLowerCase();
                     Intent intent = new Intent(mContext,Lessons.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("lesson","unit 1");
+                    bundle.putString("lesson",selectedUnit);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
