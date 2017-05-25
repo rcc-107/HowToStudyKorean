@@ -25,7 +25,6 @@ public class TutorialFragment extends Fragment {
     private RecyclerView recyclerView;
     private TutorialAdapter adapter;
     private Lesson lesson;
-//    private FirebaseRecyclerAdapter<Lesson,TutorialViewHolder> adapter;
 
     public TutorialFragment() {
     }
@@ -46,34 +45,10 @@ public class TutorialFragment extends Fragment {
         Log.d("tutorailFrag",lesson.getDesc());
         recyclerView = (RecyclerView) view;
         adapter = new TutorialAdapter(getContext(),lesson);
-//        adapter = new FirebaseRecyclerAdapter<Lesson, TutorialViewHolder>(Lesson.class,R.layout.tutorial_text,TutorialViewHolder.class,) {
-//            @Override
-//            protected void populateViewHolder(TutorialViewHolder viewHolder, Lesson model, int position) {
-//
-//            }
-//        };
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(adapter);
         return view;
     }
 
-//    public static class TutorialViewHolder extends RecyclerView.ViewHolder {
-//        private TextView title;
-//        private TextView text;
-//
-//        public TutorialViewHolder(View itemView) {
-//            super(itemView);
-//            title = (TextView) itemView.findViewById(R.id.tutTitle);
-//            text = (TextView) itemView.findViewById(R.id.tutText);
-//        }
-//
-//        public void setTitle(String title) {
-//            this.title.setText(title);
-//        }
-//
-//        public void setText(String text) {
-//            this.text.setText(text);
-//        }
-//    }
 
 }

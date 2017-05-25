@@ -72,7 +72,6 @@ public class TutorialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 tabvh.setTable(mLesson.getText().get(position).get("body"));
                 break;
         }
-//        ImageView imageView = new ImageView();
 
     }
 

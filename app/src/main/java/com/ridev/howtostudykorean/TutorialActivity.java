@@ -46,6 +46,7 @@ public class TutorialActivity extends AppCompatActivity implements NavigationVie
         View view = viewStub.inflate();
 
         lesson = getIntent().getParcelableExtra(LESSON_OBJ);
+        setTitle(lesson.getTitle());
 
         viewPager = (ViewPager) view;
         adapter = new ViewPagerAdapter(getSupportFragmentManager());

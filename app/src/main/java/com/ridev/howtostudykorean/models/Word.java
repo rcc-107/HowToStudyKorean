@@ -8,17 +8,19 @@ public class Word {
 
     private String word;
     private String meaning;
-    private String comUsages;
+    private String commonUsages;
     private String examples;
+    private String audio;
 
     public Word() {
     }
 
-    public Word(String word, String meaning, String comUsages, String examples) {
+    public Word(String word, String meaning, String commonUsages, String examples,String audio) {
         this.word = word;
         this.meaning = meaning;
-        this.comUsages = comUsages;
+        this.commonUsages = commonUsages;
         this.examples = examples;
+        this.audio = audio;
     }
 
     public String getWord() {
@@ -37,12 +39,12 @@ public class Word {
         this.meaning = meaning;
     }
 
-    public String getComUsages() {
-        return comUsages;
+    public String getCommonUsages() {
+        return commonUsages;
     }
 
-    public void setComUsages(String comUsages) {
-        this.comUsages = comUsages;
+    public void setCommonUsages(String commonUsages) {
+        this.commonUsages = commonUsages;
     }
 
     public String getExamples() {
@@ -51,5 +53,13 @@ public class Word {
 
     public void setExamples(String examples) {
         this.examples = examples;
+    }
+
+    public String getAudio() {
+        return audio;
+    }
+
+    public void setAudio(String audio) {
+        this.audio = audio;
     }
 }
