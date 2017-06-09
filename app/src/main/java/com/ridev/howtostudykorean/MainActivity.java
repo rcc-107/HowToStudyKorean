@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
                     true, // true signifies a main file
                     1, // the version of the APK that the file was uploaded
                     // against
-                    362923 // the length of the file in bytes
+                    9981035 // the length of the file in bytes
             ),
     };
 

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.ridev.howtostudykorean.R;
 import com.ridev.howtostudykorean.models.Lesson;
 
+import me.saket.bettermovementmethod.BetterLinkMovementMethod;
+
 /**
  * Created by Rica on 4/27/2017.
  */
@@ -24,11 +26,11 @@ public class TutorialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEWTYPE_TEXT = 0;
     private static final int VIEWTYPE_TABLE = 1;
 
-
     public TutorialAdapter(Context context, Lesson lesson) {
         mContext = context;
         mLesson = lesson;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -65,7 +67,25 @@ public class TutorialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case VIEWTYPE_TEXT:
                 TutorialViewHolder tutvh = (TutorialViewHolder) holder;
                 tutvh.setTitle(mLesson.getText().get(position).get("title"));
+
+                BetterLinkMovementMethod bmm = BetterLinkMovementMethod.linkifyHtml(tutvh.text);
+                bmm.setOnLinkClickListener(new CustomLinkListener() {
+                    @Override
+                    public boolean onClick(TextView textView, String url) {
+                        playAudio(url,mContext);
+                        return true;
+                    }
+                });
+//                Link link = new Link(Pattern.compile("<a+.+a>"));
+//                link.setOnClickListener(new Link.OnClickListener() {
+//                    @Override
+//                    public void onClick(String clickedText) {
+//                        Log.d("clickedText"," is "+clickedText);
+//                        playAudio(clickedText);
+//                    }
+//                });
                 tutvh.setText(mLesson.getText().get(position).get("body"));
+//                LinkBuilder.on(tutvh.text).addLink(link).build();
                 break;
             case VIEWTYPE_TABLE:
                 TableViewHolder tabvh = (TableViewHolder) holder;
@@ -80,6 +100,8 @@ public class TutorialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return mLesson.getText().size();
     }
 
+
+
     public static class TutorialViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView text;
@@ -88,6 +110,7 @@ public class TutorialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.tutTitle);
             text = (TextView) itemView.findViewById(R.id.tutText);
+//            text.setMovementMethod(CustomLinkMovement.getInstance());
         }
 
         public void setTitle(String title) {
@@ -113,4 +136,5 @@ public class TutorialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
     }
+
 }

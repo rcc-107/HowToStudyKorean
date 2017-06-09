@@ -98,7 +98,7 @@ public class WordsFragment extends Fragment {
                     }
                 });
 
-                viewHolder.playBtn.setOnClickListener(new PlaySound());
+                viewHolder.playBtn.setOnClickListener(new PlaySound(model.getAudio()));
             }
 
         };
@@ -139,15 +139,21 @@ public class WordsFragment extends Fragment {
 
     public class PlaySound implements View.OnClickListener,MediaPlayer.OnPreparedListener {
 
+        private String audioPath;
+
+        public PlaySound(String audioPath) {
+            this.audioPath = audioPath;
+        }
+
         @Override
         public void onClick(View v) {
             try {
                 ZipResourceFile expanFile = APKExpansionSupport.getAPKExpansionZipFile(getContext(),1,0);
-                AssetFileDescriptor fileDescriptor = expanFile.getAssetFileDescriptor("lesson1/wLesson-1-2.mp3");
+                AssetFileDescriptor fileDescriptor = expanFile.getAssetFileDescriptor(audioPath);
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),fileDescriptor.getStartOffset(),fileDescriptor.getLength());
-                mediaPlayer.setOnPreparedListener(new PlaySound());
+                mediaPlayer.setOnPreparedListener(this);
                 mediaPlayer.prepareAsync();
             } catch (IOException e) {
                 e.printStackTrace();
