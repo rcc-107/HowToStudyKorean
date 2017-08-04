@@ -1,32 +1,31 @@
 package com.ridev.howtostudykorean.fragments;
 
-import android.content.res.AssetFileDescriptor;
-import android.media.AudioManager;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.vending.expansion.zipfile.APKExpansionSupport;
-import com.android.vending.expansion.zipfile.ZipResourceFile;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.ridev.howtostudykorean.AudioPlayerActivity;
 import com.ridev.howtostudykorean.R;
 import com.ridev.howtostudykorean.adapters.WordsAdapter;
 import com.ridev.howtostudykorean.models.Lesson;
 import com.ridev.howtostudykorean.models.Word;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -89,16 +88,26 @@ public class WordsFragment extends Fragment {
                 viewHolder.setComus(model.getCommonUsages());
                 viewHolder.setExample(model.getExamples());
 
+                final TextView word = viewHolder.word;
                 viewHolder.word.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        word.setCompoundDrawables(null,null, ContextCompat.getDrawable(getContext(),R.drawable.ic_arrow_drop_up_black),null);
                         notifyItemChanged(mExpandedItem);
                         mExpandedItem = isExpanded? -1:position;
                         notifyItemChanged(mExpandedItem);
                     }
                 });
 
-                viewHolder.playBtn.setOnClickListener(new PlaySound(model.getAudio()));
+                final String audioPath = model.getAudio();
+                viewHolder.playBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), AudioPlayerActivity.class);
+                        intent.putExtra("audioPath",audioPath);
+                        startActivity(intent);
+                    }
+                });
             }
 
         };
@@ -112,7 +121,7 @@ public class WordsFragment extends Fragment {
         private TextView word;
         private TextView example;
         private TextView comus;
-        private TextView playBtn;
+        private Button playBtn;
         private LinearLayout moreDetails;
 
         public WordViewHolder(View itemView) {
@@ -120,7 +129,7 @@ public class WordsFragment extends Fragment {
             word = (TextView) itemView.findViewById(R.id.wordTextView);
             example = (TextView) itemView.findViewById(R.id.exampleTextView);
             comus = (TextView) itemView.findViewById(R.id.comusTextView);
-            playBtn = (TextView) itemView.findViewById(R.id.audioTextView);
+            playBtn = (Button) itemView.findViewById(R.id.audio_button);
             moreDetails = (LinearLayout) itemView.findViewById(R.id.moreDetails);
         }
 
@@ -134,35 +143,6 @@ public class WordsFragment extends Fragment {
 
         public void setExample(String examples) {
             this.example.setText(Html.fromHtml(examples));
-        }
-    }
-
-    public class PlaySound implements View.OnClickListener,MediaPlayer.OnPreparedListener {
-
-        private String audioPath;
-
-        public PlaySound(String audioPath) {
-            this.audioPath = audioPath;
-        }
-
-        @Override
-        public void onClick(View v) {
-            try {
-                ZipResourceFile expanFile = APKExpansionSupport.getAPKExpansionZipFile(getContext(),1,0);
-                AssetFileDescriptor fileDescriptor = expanFile.getAssetFileDescriptor(audioPath);
-                mediaPlayer = new MediaPlayer();
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),fileDescriptor.getStartOffset(),fileDescriptor.getLength());
-                mediaPlayer.setOnPreparedListener(this);
-                mediaPlayer.prepareAsync();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void onPrepared(MediaPlayer mp) {
-            mediaPlayer.start();
         }
     }
 
