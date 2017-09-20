@@ -76,16 +76,9 @@ public class TutorialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         return true;
                     }
                 });
-//                Link link = new Link(Pattern.compile("<a+.+a>"));
-//                link.setOnClickListener(new Link.OnClickListener() {
-//                    @Override
-//                    public void onClick(String clickedText) {
-//                        Log.d("clickedText"," is "+clickedText);
-//                        playAudio(clickedText);
-//                    }
-//                });
+
                 tutvh.setText(mLesson.getText().get(position).get("body"));
-//                LinkBuilder.on(tutvh.text).addLink(link).build();
+
                 break;
             case VIEWTYPE_TABLE:
                 TableViewHolder tabvh = (TableViewHolder) holder;
@@ -110,7 +103,7 @@ public class TutorialAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.tutTitle);
             text = (TextView) itemView.findViewById(R.id.tutText);
-//            text.setMovementMethod(CustomLinkMovement.getInstance());
+
         }
 
         public void setTitle(String title) {

@@ -26,8 +26,6 @@ import com.ridev.howtostudykorean.adapters.WordsAdapter;
 import com.ridev.howtostudykorean.models.Lesson;
 import com.ridev.howtostudykorean.models.Word;
 
-import java.util.ArrayList;
-
 /**
  * Created by Rica on 4/22/2017.
  */
@@ -37,8 +35,7 @@ public class WordsFragment extends Fragment {
     private RecyclerView recyclerView;
     private WordsAdapter adapter;
     private Lesson lesson;
-    private ArrayList<String> words;
-    private ArrayList<Word> wordsList;
+    private String title;
     private int mExpandedItem;
 
     private FirebaseDatabase firebaseDatabase;
@@ -68,15 +65,12 @@ public class WordsFragment extends Fragment {
         reference = firebaseDatabase.getReference().child("words");
 
         lesson = getArguments().getParcelable("lesson");
-        words = lesson.getNouns();
-        wordsList = new ArrayList<>();
+        title = lesson.getTitle();
+        wordsQuery = reference.orderByChild("lesson").equalTo(title);
 
-        for(String word:words)  {
-            wordsQuery = reference.orderByChild("word").equalTo(word);
-        }
 
         recyclerView = (RecyclerView) view;
-        fAdapter = new FirebaseRecyclerAdapter<Word,WordViewHolder>(Word.class,R.layout.tutorial_words,WordViewHolder.class,reference) {
+        fAdapter = new FirebaseRecyclerAdapter<Word,WordViewHolder>(Word.class,R.layout.tutorial_words,WordViewHolder.class,wordsQuery) {
 
             @Override
             protected void populateViewHolder(WordViewHolder viewHolder, Word model, final int position) {
@@ -114,6 +108,12 @@ public class WordsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(fAdapter);
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fAdapter.cleanup();
     }
 
     public static class WordViewHolder extends RecyclerView.ViewHolder {
